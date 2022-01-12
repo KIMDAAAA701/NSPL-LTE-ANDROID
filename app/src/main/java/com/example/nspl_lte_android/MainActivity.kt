@@ -1,12 +1,21 @@
 package com.example.nspl_lte_android
 
+import android.Manifest
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.media.tv.TvContract.Programs.Genres.MUSIC
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Telephony
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.PackageManagerCompat
 import java.io.File
+import java.util.jar.Manifest as Manifest1
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,9 +29,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        var requestPermissions = arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val status = ContextCompat.checkSelfPermission(this, requestPermissions.toString())
+        if (status == PackageManager.PERMISSION_GRANTED){
+            Log.d("nspl_call", "permission granted ${status} ${PackageManager.PERMISSION_GRANTED}")
+        }else{
+            Log.d("nspl_call", "permission denied ${status} ${PackageManager.PERMISSION_GRANTED}")
+            ActivityCompat.requestPermissions(this, requestPermissions, 100)
+        }
+
+        Log.d("nspl_call", "MainActivity onCreate")
+
         findBooks()
 
+
     }// onCreate() end
+
 
     fun findBooks() {
 
