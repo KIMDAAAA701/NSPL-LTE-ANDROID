@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.telecom.Call
 import android.telephony.TelephonyManager
+import android.util.Log
 import java.util.*
 
 open class CallBroadcastReceiver : BroadcastReceiver() {
@@ -17,21 +18,30 @@ open class CallBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
+        Log.d("nspl_call", "onReceive")
+
         if (intent != null) {
+            Log.d("nspl_call", "in if() onReceive")
+
             var stateStr = intent.getStringExtra(TelephonyManager.EXTRA_STATE)
-            var number = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)
 
             var state = 0
 
             if (stateStr.equals(TelephonyManager.EXTRA_STATE_IDLE)){
                 state = TelephonyManager.CALL_STATE_IDLE
+                Log.d("nspl_call", "in if() onReceive state = CALL_STATE_IDLE")
             }
             else if (stateStr.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)){
+                Log.d("nspl_call", "in if() onReceive state = EXTRA_STATE_OFFHOOK")
                 state = TelephonyManager.CALL_STATE_OFFHOOK
             }
             else if (stateStr.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
+                Log.d("nspl_call", "in if() onReceive state = EXTRA_STATE_RINGING")
                 state = TelephonyManager.CALL_STATE_RINGING
             }
+//            TelephonyManager.EXTRA_STATE_IDLE: 통화종료 혹은 통화벨 종료
+//        TelephonyManager.EXTRA_STATE_RINGING: 통화벨 울리는중
+//        TelephonyManager.EXTRA_STATE_OFFHOOK: 통화중
 
             onCallStateChanged(context, state, savedNumber)
         }//if end

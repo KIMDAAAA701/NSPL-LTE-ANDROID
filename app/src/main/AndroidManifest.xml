@@ -4,9 +4,8 @@
     package="com.example.nspl_lte_android">
 
     <!-- 전화가 오는 상황을 감지하기 위해 전화상태를 읽을 수 있는 권한 / BroadcastReceiver -->
-    <uses-permission
-        android:name="android.permission.READ_PHONE_STATE"
-        tools:ignore="WrongManifestParent" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -32,12 +31,10 @@
         </activity>
 
 
-        <receiver
-            android:name=".CallBroadcastReceiver"
-            android:exported="false"
-            tools:ignore="MissingClass,WrongManifestParent">
+        <receiver android:name=".CallBroadcastReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.PHONE_STATE" />
+                <action android:name="android.intent.action.PHONE_STATE"/>
             </intent-filter>
         </receiver>
 
